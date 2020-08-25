@@ -13,7 +13,7 @@ else:
     STRFTIME_DATA_FRAME_FORMAT = '%-m/%-d/%y'
 
 def usa_counties():
-    df= pd.read_excel("GeoFRED_Unemployment_Rate_by_County_Percent.xls", skiprows=1)
+    df= pd.read_excel("GeoFRED_Unemployment_Rate_by_County_Percent.xls", skiprows=1, dtype={"Region Code": str})
     return df
 
 def city_population():
