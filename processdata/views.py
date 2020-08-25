@@ -1,18 +1,22 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
-
 import json
-
 from . import getdata, maps
 
 
 def index(request): 
-    world_map_dict = world_map()
-
-    context = dict(**world_map_dict)
-
+    usa_county_popu_dict = usa_county_popu()
+    context = dict(**usa_county_popu_dict)
     return render(request, template_name='index.html', context=context)
+
+def usa_county_popu():
+    plot_div = maps.usa_county_popu()
+    return {'usa_county_popu': plot_div}
+
+def mapspage(request):
+    plot_div = maps.usa_city_popu()
+    return render(request, template_name='pages/maps.html', context={'usa_city_popu': plot_div})
 
 
 def report(request):
@@ -52,11 +56,6 @@ def global_cases(request):
     return HttpResponse(df.to_json(orient='records'), content_type='application/json')
 
 
-def world_map():
-    plot_div = maps.world_map()
-    return {'world_map': plot_div}
-
-
 def realtime_growth(request):
     import pandas as pd
     df = getdata.realtime_growth();
@@ -82,6 +81,3 @@ def daily_growth(request):
     return HttpResponse(json_string, content_type='application/json')
 
 
-def mapspage(request):
-    plot_div = maps.usa_map()
-    return render(request, template_name='pages/maps.html', context={'usa_map': plot_div})

@@ -1,14 +1,8 @@
-# ©Brian Ruiz, @brianruizy
-# Created: 03-15-2020
+
 import datetime
 import platform
 
 import pandas as pd
-
-# Datasets scraped can be found in the following URL's:
-# ¹ Johns Hopkins: https://github.com/CSSEGISandData/COVID-19 
-# ² Our World In Data: https://github.com/owid/covid-19-data/tree/master/public/data
-# ³ New York Times: https://github.com/nytimes/covid-19-data
 
 # Different styles in zero-padding in date depend on operating systems
 if platform.system() == 'Linux':
@@ -18,19 +12,12 @@ elif platform.system() == 'Windows':
 else:
     STRFTIME_DATA_FRAME_FORMAT = '%-m/%-d/%y'
 
+def usa_counties():
+    df= pd.read_excel("GeoFRED_Unemployment_Rate_by_County_Percent.xls", skiprows=1)
+    return df
 
-def daily_report(date_string=None):
-    # Reports aggegrade data, dating as far back to 01-22-2020
-    # If passing arg, must use above date formatting '01-22-2020'
-    report_directory = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/'
-    
-    if date_string is None: 
-        yesterday = datetime.date.today() - datetime.timedelta(days=2)
-        file_date = yesterday.strftime('%m-%d-%Y')
-    else: 
-        file_date = date_string 
-    
-    df = pd.read_csv(report_directory + file_date + '.csv', dtype={"FIPS": str})
+def city_population():
+    df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
     return df
 
 
@@ -123,12 +110,7 @@ def percentage_trends():
 
 
 def global_cases():
-    """[summary]: Creates a table on total statistics of all countries,
-    sorted by confirmations.
-
-    Returns:
-        [pd.DataFrame]
-    """
+   
     df = daily_report()[['Country_Region', 'Confirmed', 'Deaths', 'Recovered', 'Active']]
     df.rename(columns={'Country_Region':'Country'}, inplace=True) 
     df = df.groupby('Country', as_index=False).sum()  # Dataframe mapper, combines rows where country value is the same
@@ -136,18 +118,3 @@ def global_cases():
     
     return df
 
-def usa_counties():
-    """[summary]: Returns live cases of USA at county-level
-    
-    source:
-        ³ nytimes
-    Returns:
-        [pd.DataFrame]
-    """
-    populations = pd.read_csv('https://raw.githubusercontent.com/balsama/us_counties_data/master/data/counties.csv')[['FIPS Code', 'Population']]
-    populations.rename(columns={'FIPS Code': 'fips'}, inplace=True)
-    df = pd.read_csv('https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv', dtype={"fips": str}).iloc[:,:6]
-    df = pd.merge(df, populations, on='fips')
-    df['cases/capita'] = (df.cases / df.Population)*100000 # per 100k residents
-
-    return df
