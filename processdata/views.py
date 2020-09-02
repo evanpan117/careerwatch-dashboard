@@ -14,6 +14,10 @@ def usa_county_popu():
     plot_div = maps.usa_county_popu()
     return {'usa_county_popu': plot_div}
 
+def indexpage(request):
+    plot_div = maps.usa_city_popu()
+    return render(request, template_name='index.html', context=dict(**{'usa_city_popu': plot_div}))
+
 def mapspage(request):
     plot_div = maps.usa_city_popu()
     return render(request, template_name='pages/maps.html', context={'usa_city_popu': plot_div})

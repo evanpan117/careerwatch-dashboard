@@ -5,7 +5,6 @@
 {% block content %}  
 <div class="container-fluid pt-6 bg-secondary">
   <h2>Maps</h2>
-  <p></p>
   <div class="row">
     <div class="col-xl-12 mb-5 mb-xl-0">  <!-- Global interactive Plotly Mabpox -->
       <div class="card shadow fade-in-bottom">
@@ -17,7 +16,26 @@
           </div>
         </div>
         <div style="position: absolute; padding:1.25rem 1.5rem;">
-            <h6 class="text-uppercase text-muted ls-1 mb-1">USA Population by Counties</h6>
+            <h6 class="text-uppercase text-muted ls-1 mb-1">USA Unemployment Rate</h6>
+            <h2 class="text-dark mb-0"></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12 mb-8 mb-xl-0">  <!-- Global interactive Plotly Mabpox -->
+      <div class="card shadow fade-in-bottom">
+        <div class="card-body plotly worldmap">
+          <div class="chart">
+            {% autoescape off %}
+            <iframe src="//geofred.stlouisfed.org/embed/?m=lKM&esize=large&h=638&w=1257" scrolling="no" frameborder="0" style="overflow:hidden;height:547px;width:1040px;" allowTransparency="true"></iframe>
+
+            {% endautoescape %}
+          </div>
+        </div>
+        <div style="position: absolute; padding:1.25rem 1.5rem;">
+            <h6 class="text-uppercase text-muted ls-1 mb-1">USA Unemployment Rate</h6>
             <h2 class="text-dark mb-0"></h2>
         </div>
       </div>

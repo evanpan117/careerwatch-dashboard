@@ -26,6 +26,24 @@
         </div>
       </div>
 
+      <div class="row mt-3">
+        <div class="col-xl-11 mb-5 mb-xl-0">  <!-- Global interactive Plotly Mabpox -->
+          <div class="card shadow fade-in-bottom">
+            <div class="card-body plotly worldmap">
+              <div class="chart">
+                {% autoescape off %}
+                {{ usa_city_popu }}
+                {% endautoescape %}
+              </div>
+            </div>
+            <div style="position: absolute; padding:1.25rem 1.5rem;">
+                <h6 class="text-uppercase text-muted ls-1 mb-1">USA Population by Counties</h6>
+                <h2 class="text-dark mb-0"></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       
       <div class="row mt-3">
         <div class="col-xl-11 mb-5 mb-xl-0">  <!-- Growth interactive scatterplot -->

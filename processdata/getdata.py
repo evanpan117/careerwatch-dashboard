@@ -1,8 +1,12 @@
 
-import datetime
+import datetime as dt
 import platform
-
 import pandas as pd
+import fred
+import pandas_datareader.data as web
+
+my_fred_api_key = 'f18267cd179d1658737f4a68e3e8c664'
+fred.key(my_fred_api_key)
 
 # Different styles in zero-padding in date depend on operating systems
 if platform.system() == 'Linux':
@@ -17,9 +21,14 @@ def usa_counties():
     return df
 
 def city_population():
-    df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/us-cities-top-1k.csv")
+    sdt = dt.datetime(1976, 1, 1)
+    edt = dt.datetime(2020, 7, 1)
+    df = web.DataReader("UNRATE", "fred", sdt, edt)
     return df
-
+    
+def plotly_time_series():
+    df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
+    return df
 
 def daily_confirmed():
     # returns the daily reported cases for respective date, 
